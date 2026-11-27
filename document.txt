@@ -1,0 +1,87 @@
+==================================================
+DOCUMENTACIÓN DEL PROYECTO: PERNOSCOL
+==================================================
+
+1. DESCRIPCIÓN GENERAL
+--------------------------------------------------
+Proyecto web e-commerce desarrollado para "PERNOSCOL", una empresa 
+especializada en soluciones de fijación, tornillería industrial y herramientas 
+en Colombia. Cuenta con catálogo dinámico conectado a base de datos MySQL, 
+carrito de compras interactivo y un sistema completo de autenticación de usuarios.
+
+2. TECNOLOGÍAS UTILIZADAS
+--------------------------------------------------
+- Frontend: HTML5, CSS3 (Estilos personalizados sin frameworks externos), JavaScript (ES6+).
+- Backend: PHP 8.x.
+- Base de Datos: MySQL (Gestionada mediante phpMyAdmin en entorno local XAMPP).
+- Iconos y Fuentes: FontAwesome 6.4.0, Segoe UI.
+
+3. ESTRUCTURA DE ARCHIVOS Y CARPETAS (XAMPP / htdocs / pernoscol)
+--------------------------------------------------
+/pernoscol
+│
+├── index.php            # Página principal (carga productos dinámicos y maneja sesión)
+├── login.php            # Vista y lógica de inicio de sesión y registro de usuarios
+├── logout.php           # Script para destruir la sesión del usuario
+├── conexion.php         # Archivo de conexión centralizada a la base de datos MySQL
+├── styles.css           # Hoja de estilos principal del sitio
+├── script.js            # Lógica del carrito de compras, buscador y animaciones
+├── document.txt         # Documentación técnica del proyecto
+│
+├── img/                 # Carpeta de imágenes de productos y logotipo
+│   ├── logo-pernoscol.png
+│   ├── pernos-alta-resistencia.png
+│   ├── tornilleria-inoxidable1.png
+│   ├── anclajes-quimicos1.png
+│   ├── herramientas-torque.png
+│   ├── Hex Bolt Gr8.png
+│   ├── Stainless Steel Screw.png
+│   ├── Chemical Anchor.png
+│   └── Torque Wrench.png
+│
+└── assets/              # Recursos visuales adicionales (banners, etc.)
+    └── banner-hero-bg.jpg
+
+
+4. ESTRUCTURA DE LA BASE DE DATOS (pernoscol_db)
+--------------------------------------------------
+Ejecuta el siguiente script SQL en phpMyAdmin para configurar las tablas:
+
+CREATE DATABASE IF NOT EXISTS pernoscol_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE pernoscol_db;
+
+-- Tabla de Usuarios
+CREATE TABLE IF NOT EXISTS usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Tabla de Productos Destacados
+CREATE TABLE IF NOT EXISTS productos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT NOT NULL,
+    precio DECIMAL(10,2) NOT NULL,
+    imagen VARCHAR(255) NOT NULL,
+    rating INT DEFAULT 5
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Datos iniciales de productos
+INSERT INTO productos (id, nombre, descripcion, precio, imagen, rating) VALUES
+(1, 'Hex Bolt Gr. 8', 'Hex Bolt Gr. 8, Pernos para Fijación de alta resistencia y durabilidad...', 45000.00, 'Img/Hex Bolt Gr8.png', 5),
+(2, 'Stainless Steel Screw', 'Stainless Steel Screw en acero inoxidable resistente a la corrosión...', 45000.00, 'img/Stainless Steel Screw.png', 5),
+(3, 'Chemical Anchor', 'Chemical Anchor para fijaciones estructurales de máxima seguridad...', 35000.00, 'img/Chemical Anchor.png', 5),
+(4, 'Torque Wrench', 'Torque Wrench profesional calibrado para aprietes mecánicos precisos...', 45000.00, 'img/Torque Wrench.png', 5)
+ON DUPLICATE KEY UPDATE id=id;
+
+
+5. INSTRUCCIONES DE EJECUCIÓN EN XAMPP
+--------------------------------------------------
+1. Iniciar los servicios de Apache y MySQL en el panel de control de XAMPP.
+2. Copiar la carpeta completa 'pernoscol' dentro del directorio C:\xampp\htdocs\.
+3. Abrir phpMyAdmin (http://localhost/phpmyadmin/), crear una base de datos o importar el script SQL anterior.
+4. Abrir el navegador e ingresar a la URL: http://localhost/pernoscol/index.php
+==================================================
